@@ -252,7 +252,7 @@ defmodule ExUnitEx.Assertions do
     raise "Some processes in incorrect state:\n #{errors}"
   end
 
-  defp stringify([]), do: 'none'
+  defp stringify([]), do: "none"
   defp stringify({atom, id}), do: "#{atom}: #{id}"
   defp stringify(atom), do: "#{atom}"
 end

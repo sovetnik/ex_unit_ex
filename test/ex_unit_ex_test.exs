@@ -1,79 +1,8 @@
-defmodule ExUnitEx.AssertionsTest.Registered do
-  use GenServer
-
-  @impl true
-  def init(value) do
-    {:ok, value}
-  end
-
-  def start_processes(registry, names) do
-    Enum.map(names, fn name -> start_link(registry, name) end)
-  end
-
-  def stop_processes(registry, names) do
-    Enum.map(names, fn name -> stop_process(registry, name) end)
-  end
-
-  def start_link(registry, name) do
-    GenServer.start(__MODULE__, nil, name: {:via, Registry, {registry, name}})
-  end
-
-  def stop_process(registry, name) do
-    case Registry.lookup(registry, name) do
-      [{pid, nil}] ->
-        Process.exit(pid, :shutdown)
-
-      _ ->
-        nil
-    end
-  end
-end
-
-defmodule ExUnitEx.AssertionsTest.Named do
-  use GenServer
-
-  @impl true
-  def init(stack) do
-    {:ok, stack}
-  end
-
-  def start_processes(names) do
-    Enum.map(names, fn name -> start_process(name) end)
-  end
-
-  def stop_processes(names) do
-    Enum.map(names, fn name -> stop_process(name) end)
-  end
-
-  def start_process(name) do
-    GenServer.start(__MODULE__, [], name: name)
-  end
-
-  def stop_process(name) do
-    case Process.whereis(name) do
-      nil ->
-        nil
-
-      pid ->
-        Process.exit(pid, :shutdown)
-    end
-  end
-end
-
-defmodule ExUnitEx.AssertionsTest.TestRegistry do
-  def wait_for_registry(name) do
-    case Registry.start_link(keys: :unique, name: name) do
-      {:ok, pid} when is_pid(pid) -> pid
-      _ -> wait_for_registry(name)
-    end
-  end
-end
-
-alias ExUnitEx.AssertionsTest.{Registered, Named, TestRegistry}
-
 defmodule ExUnitEx.AssertionsTest do
   use ExUnit.Case, async: true
   import ExUnitEx.Assertions
+
+  alias Test.Support.{Named, Registered, TestRegistry}
 
   setup_all do
     TestRegistry.wait_for_registry(:test_registry_one)

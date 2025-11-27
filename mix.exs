@@ -4,8 +4,10 @@ defmodule ExUnitEx.MixProject do
   def project do
     [
       app: :ex_unit_ex,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.14",
+      elixirc_paths: elixirc_paths(Mix.env()),
+      deps: deps(),
       description: description(),
       package: package(),
       name: "ExUnitEx",
@@ -18,8 +20,17 @@ defmodule ExUnitEx.MixProject do
     []
   end
 
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_env), do: ["lib"]
+
+  defp deps() do
+    [
+      {:ex_doc, "~> 0.39", only: :dev, runtime: false}
+    ]
+  end
+
   defp description do
-    "ExUnitEx provides extra assertions"
+    "ExUnitEx provides extra assertions for process testing"
   end
 
   defp package() do
