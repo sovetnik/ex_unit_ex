@@ -1,4 +1,5 @@
 defmodule Test.Support.Registered do
+  @moduledoc false
   use GenServer
 
   @impl true

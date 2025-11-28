@@ -1,4 +1,5 @@
 defmodule Test.Support.TestRegistry do
+  @moduledoc false
   def wait_for_registry(name) do
     case Registry.start_link(keys: :unique, name: name) do
       {:ok, pid} when is_pid(pid) -> pid

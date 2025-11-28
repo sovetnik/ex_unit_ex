@@ -1,6 +1,6 @@
 # ExUnitEx
 
-ExUnitEx provides extra assertions for testing processes side effects when invoking functions that start or stop several processes. These new assertions are `assert_processes_started`, `assert_processes_stopped`, and `assert_processes_survived` macroses for using in ExUnit tests.
+ExUnitEx provides extra assertions for testing process side effects when invoking functions that start or stop several processes. These assertions are `assert_processes_started`, `assert_processes_stopped`, and `assert_processes_survived` macros for use in ExUnit tests.
 
 The assertion macros will take in two arguments - the function that starts or stops the processes and a list of expected process side effects. The expected process side effects will be in the form of a keyword list, where each key represents a process and the value is a list of expected side effects for that process. When assertion succeeds, it returns the result of passed function.
 
@@ -25,13 +25,12 @@ The assertion macros will take in two arguments - the function that starts or st
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ex_unit_ex` to your list of dependencies in `mix.exs`:
+Install by adding `ex_unit_ex` to your dependencies:
 
 ```elixir
 def deps do
   [
-    {:ex_unit_ex, "~> 0.1.0"}
+    {:ex_unit_ex, "~> 0.1.1"}
   ]
 end
 ```
